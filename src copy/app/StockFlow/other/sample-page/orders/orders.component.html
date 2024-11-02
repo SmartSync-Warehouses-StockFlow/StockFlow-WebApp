@@ -1,0 +1,111 @@
+<div class="orders-container">
+    <h2>Overall Orders</h2>
+    <div class="overall-stats">
+      <div>
+        <span>Total Orders:</span>
+        <strong>37</strong>
+      </div>
+      <div>
+        <span>Total Received:</span>
+        <strong>32</strong>
+        <span>($25000 Revenue)</span>
+      </div>
+      <div>
+        <span>Total Returned:</span>
+        <strong>5</strong>
+        <span>($2500 Cost)</span>
+      </div>
+      <div>
+        <span>On the way:</span>
+        <strong>12</strong>
+        <span>($2356 Cost)</span>
+      </div>
+    </div>
+
+    <button class="add-product" (click)="toggleForm()">Add Product</button>
+
+    <div *ngIf="isFormVisible" class="new-order-modal">
+        <div class="modal-content">
+          <h4>New Order</h4>
+          <label>
+            Product Name:
+            <input type="text" [(ngModel)]="newOrder.productName" placeholder="Enter product name" />
+          </label>
+          <label>
+            Product ID:
+            <input type="text" [(ngModel)]="newOrder.productId" placeholder="Enter product ID" />
+          </label>
+          <label>
+            Category:
+            <select [(ngModel)]="newOrder.category">
+              <option>Select product category</option>
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+          </label>
+          <label>
+            Order value:
+            <input type="number" [(ngModel)]="newOrder.orderValue" placeholder="Enter order value" />
+          </label>
+          <label>
+            Quantity:
+            <input type="number" [(ngModel)]="newOrder.quantity" placeholder="Enter product quantity" />
+          </label>
+          <label>
+            Unit:
+            <input type="text" [(ngModel)]="newOrder.unit" placeholder="Enter product unit" />
+          </label>
+          <label>
+            Buying price:
+            <input type="number" [(ngModel)]="newOrder.buyingPrice" placeholder="Enter buying price" />
+          </label>
+          <label>
+            Date of delivery:
+            <input type="date" [(ngModel)]="newOrder.deliveryDate" />
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="newOrder.notifyOnDelivery" />
+            Notify on the date of delivery
+          </label>
+
+          <div class="button-container">
+            <button (click)="addProduct()">Add Product</button>
+            <button (click)="toggleForm()">Discard</button>
+          </div>
+        </div>
+      </div>
+
+    <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Products</th>
+            <th>Order Value</th>
+            <th>Quantity</th>
+            <th>Order ID</th>
+            <th>Expected Delivery</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dataSet">
+            <td>{{ data.product }}</td>
+            <td>{{ data.orderValue | currency }}</td>
+            <td>{{ data.quantity }} Packets</td>
+            <td>{{ data.orderId }}</td>
+            <td>{{ data.expectedDelivery }}</td>
+            <td [ngClass]="{
+              'status': true,
+              'delayed': data.status === 'Delayed',
+              'confirmed': data.status === 'Confirmed',
+              'returned': data.status === 'Returned',
+              'out-delivery': data.status === 'Out for delivery'
+            }">
+              {{ data.status }}
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button>Previous</button>
+        <button>Next</button>
+    </div>
+</div>

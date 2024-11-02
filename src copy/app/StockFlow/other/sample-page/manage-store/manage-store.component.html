@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="header">
+      <h3>Manage Store</h3>
+      <button class="btn btn-primary" (click)="addStore()">Add Store</button>
+    </div>
+  
+    <div class="store-card" *ngFor="let store of stores">
+      <div class="branch-info">
+        <h5 class="branch-name">{{ store.branch }}</h5>
+      </div>
+      <div class="store-details">
+        <p class="store-name">{{ store.name }}</p>
+        <p class="address">{{ store.address }}</p>
+        <p class="location">{{ store.city }} - {{ store.zipcode }}</p>
+        <p class="phone">{{ store.phone }}</p>
+      </div>
+      <button class="btn btn-outline-primary edit-btn" (click)="editStore(store)">Edit</button>
+    </div>
+  </div>
+  
