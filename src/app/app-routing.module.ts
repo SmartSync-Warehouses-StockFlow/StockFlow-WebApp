@@ -5,6 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 // Project import
 import { AdminComponent } from './theme/layouts/admin-layout/admin-layout.component';
 import { GuestComponent } from './theme/layouts/guest/guest.component';
+import { SettingComponent } from './StockFlow/setting/setting.component';
+
+
 
 const routes: Routes = [
   {
@@ -20,9 +23,14 @@ const routes: Routes = [
         path: 'dashboard/default',
         loadComponent: () => import('./StockFlow/default/dashboard/dashboard.component').then((c) => c.DefaultComponent)
       },
+
       {
         path: 'sample-page',
         loadComponent: () => import('./StockFlow/other/sample-page/sample-page.component')
+      },
+      {
+        path: 'setting', // Ruta añadida para el componente Setting
+        loadComponent: () => import('./StockFlow/setting/setting.component').then((c) => c.SettingComponent)
       }
     ]
   },
@@ -34,6 +42,8 @@ const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./StockFlow/authentication/login/login.component')
       },
+
+
       {
         path: 'register',
         loadComponent: () => import('./StockFlow/authentication/register/register.component')
