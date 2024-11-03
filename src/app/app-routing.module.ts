@@ -31,6 +31,10 @@ const routes: Routes = [
       {
         path: 'setting', // Ruta añadida para el componente Setting
         loadComponent: () => import('./StockFlow/setting/setting.component').then((c) => c.SettingComponent)
+      },
+      {
+        path: 'profile', // Ruta añadida para el componente Setting
+        loadComponent: () => import('./StockFlow/profile/profile.component').then((c) => c.ProfileComponent)
       }
     ]
   },
