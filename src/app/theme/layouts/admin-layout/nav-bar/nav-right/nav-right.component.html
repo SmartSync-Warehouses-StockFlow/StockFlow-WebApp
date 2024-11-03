@@ -112,7 +112,7 @@
           <ng-template ngbNavContent>
             @for (task of profile; track task) {
               <div>
-                <a class="dropdown-item">
+                <a class="dropdown-item" [routerLink]="task.title === 'Account Settings' ? '/settings' : null">
                   <i class="text-muted" antIcon theme="outline" type="{{ task.icon }}"></i>
                   <span>{{ task.title }}</span>
                 </a>
@@ -127,7 +127,7 @@
           </ng-template>
         </li>
         <li ngbNavItem="2">
-          <a ngbNavLink>
+          <a ngbNavLink [routerLink]="['/setting']">
             <i class="me-2" antIcon theme="outline" type="setting"></i>
             Setting
           </a>
