@@ -31,6 +31,14 @@ const routes: Routes = [
       {
         path: 'setting', // Ruta añadida para el componente Setting
         loadComponent: () => import('./StockFlow/setting/setting.component').then((c) => c.SettingComponent)
+      },
+      {
+        path: 'manage-store',
+        loadComponent:()=> import('./StockFlow/other/sample-page/manage-store/manage-store.component')
+      },
+      {
+        path:'orders',
+        loadComponent:()=> import('./StockFlow/other/sample-page/orders/orders.component')
       }
     ]
   },

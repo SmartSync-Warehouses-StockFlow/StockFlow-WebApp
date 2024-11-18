@@ -69,7 +69,7 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/orders',
         icon: 'shopping-cart',
-        target: true,
+
         breadcrumbs: false
       },
       {
@@ -79,7 +79,7 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/manage-store',
         icon: 'manage',
-        target: true,
+       
         breadcrumbs: false
       }
     ]
