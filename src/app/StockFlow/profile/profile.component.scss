@@ -35,6 +35,13 @@ input[type="email"] {
   font-size: 14px;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px; /* Espaciado entre botones */
+  margin-top: 20px;
+  margin-left: 160px; /* Mantén el margen si es necesario */
+}
+
 .save-btn {
   background-color: #f7931e;
   color: white;
@@ -42,9 +49,15 @@ input[type="email"] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  align-self: flex-start;
-  margin-top: 20px;
-  margin-left: 160px;
+}
+
+.edit-btn {
+  background-color: #007bff; /* Azul claro */
+  color: white;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .profile-section {
