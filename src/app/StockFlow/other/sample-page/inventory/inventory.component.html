@@ -1,5 +1,5 @@
 <div class="orders-container">
-  <!-- Tarjeta para Overall Orders -->
+ 
   <nz-card nzTitle="Overall Orders" [nzBordered]="true" class="overall-orders-card">
     <div class="stats">
       <div>
@@ -24,7 +24,7 @@
     </div>
   </nz-card>
 
-  <!-- Tarjeta para Orders -->
+
   <nz-card
     nzTitle="Orders"
     [nzBordered]="true"
@@ -35,7 +35,7 @@
       <button nz-button nzType="primary" (click)="toggleForm()">Add Product</button>
     </ng-template>
 
-    <!-- Tabla de órdenes -->
+ 
     <nz-table
       #basicTable
       [nzBordered]="true"
@@ -68,7 +68,7 @@
     </nz-table>
   </nz-card>
 
-  <!-- Modal para Add Product -->
+
   <div *ngIf="isFormVisible" class="new-product-modal">
     <div class="modal-content">
       <h4>New Product</h4>
@@ -79,7 +79,7 @@
         </div>
       </div>
   
-      <!-- Formulario -->
+
       <form>
         <div class="form-row">
           <label for="productName">Product Name:</label>

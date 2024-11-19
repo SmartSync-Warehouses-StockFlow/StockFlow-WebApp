@@ -13,7 +13,7 @@ interface Store {
 @Component({
   selector: 'app-manage-store',
   standalone: true,
-  imports: [CommonModule], // Importa CommonModule aquí
+  imports: [CommonModule],
   templateUrl: './manage-store.component.html',
   styleUrl: './manage-store.component.scss'
 })
@@ -46,12 +46,12 @@ export default class ManageStoreComponent {
   ];
 
   addStore() {
-    // Lógica para agregar una nueva tienda
+   
     console.log('Add Store button clicked');
   }
 
   editStore(store: Store) {
-    // Lógica para editar la tienda seleccionada
+  
     console.log('Edit Store button clicked for:', store);
   }
 }

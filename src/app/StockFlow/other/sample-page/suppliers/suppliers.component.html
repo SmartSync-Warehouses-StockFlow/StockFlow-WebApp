@@ -1,5 +1,5 @@
 <div class="card">
-  <!-- Encabezado de la tabla -->
+
   <div class="table-header">
     <h2>Suppliers</h2>
     <div class="table-actions">
@@ -9,7 +9,6 @@
     </div>
   </div>
 
-  <!-- Modal para agregar un nuevo proveedor -->
   <div *ngIf="isFormVisible" class="new-supplier-modal">
     <div class="modal-content">
       <h4>New Supplier</h4>
@@ -19,7 +18,7 @@
         </div>
       </div>
 
-      <!-- Campos del formulario -->
+
       <label>
         Supplier Name:
         <input type="text" [(ngModel)]="newSupplier.supplierName" placeholder="Enter supplier name" />
@@ -44,7 +43,6 @@
         <input type="text" [(ngModel)]="newSupplier.contactNumber" placeholder="Enter supplier contact number" />
       </label>
 
-      <!-- Tipo de devolución (radios) -->
       <div class="type-container">
         <label class="radio">
           <input type="radio" name="returnType" [(ngModel)]="newSupplier.type" value="Not taking return" />
@@ -56,7 +54,7 @@
         </label>
       </div>
 
-      <!-- Botones del modal -->
+
       <div class="button-container">
         <button class="discard-button" (click)="toggleForm()">Discard</button>
         <button class="add-button" (click)="addSupplier()">Add Supplier</button>
@@ -64,7 +62,6 @@
     </div>
   </div>
 
-  <!-- Tabla de proveedores -->
   <nz-table
     [nzData]="filteredSuppliers"
     [nzBordered]="true"

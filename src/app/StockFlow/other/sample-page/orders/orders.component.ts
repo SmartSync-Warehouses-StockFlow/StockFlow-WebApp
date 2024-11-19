@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-// Importaciones de NG-ZORRO
+
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -36,7 +36,7 @@ interface Order {
     NzInputModule,
     NzSelectModule,
     NzCheckboxModule,
-    NzPaginationModule, // Módulo necesario para nz-pagination
+    NzPaginationModule, 
   ],
 })
 export default  class OrdersComponent {

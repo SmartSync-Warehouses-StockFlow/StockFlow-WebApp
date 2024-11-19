@@ -1,6 +1,6 @@
 import { Component,ChangeDetectorRef  } from '@angular/core';
 
-// Importaciones de NG-ZORRO
+
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -70,7 +70,7 @@ export default class InventoryComponent {
  
   toggleForm(): void {
     this.isFormVisible = !this.isFormVisible;
-    this.cdr.detectChanges(); // Forzar el redibujado del modal
+    this.cdr.detectChanges();
   }
 
   addProduct(): void {
