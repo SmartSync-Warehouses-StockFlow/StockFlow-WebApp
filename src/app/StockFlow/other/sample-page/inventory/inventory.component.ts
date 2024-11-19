@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectorRef  } from '@angular/core';
 
 // Importaciones de NG-ZORRO
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -22,10 +22,8 @@ interface Order {
 }
 
 @Component({
-  selector: 'app-orders',
+  selector: 'app-inventory',
   standalone: true,
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss'],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,10 +34,12 @@ interface Order {
     NzInputModule,
     NzSelectModule,
     NzCheckboxModule,
-    NzPaginationModule, // Módulo necesario para nz-pagination
+    NzPaginationModule,
   ],
+  templateUrl: './inventory.component.html',
+  styleUrls: ['./inventory.component.scss']
 })
-export default  class OrdersComponent {
+export default class InventoryComponent {
   dataSet: Order[] = [
     { product: 'Maggi', orderValue: 4306, quantity: 43, orderId: '7535', expectedDelivery: '11/12/22', status: 'Delayed' },
     { product: 'Bru', orderValue: 2557, quantity: 22, orderId: '5724', expectedDelivery: '21/12/22', status: 'Confirmed' },
@@ -51,39 +51,40 @@ export default  class OrdersComponent {
     { product: 'Scotch Brite', orderValue: 3559, quantity: 43, orderId: '3757', expectedDelivery: '6/6/23', status: 'Confirmed' },
     { product: 'Coca Cola', orderValue: 2055, quantity: 41, orderId: '2474', expectedDelivery: '11/11/22', status: 'Delayed' }
   ];
-  
+
   isFormVisible: boolean = false;
-  
-  newOrder: any = {
+
+  newProduct: any = {
     productName: '',
     productId: '',
     category: '',
-    orderValue: 0,
+    buyingPrice: 0,
     quantity: 0,
     unit: '',
-    buyingPrice: 0,
-    deliveryDate: '',
-    notifyOnDelivery: false
+    expiryDate: '',
+    thresholdValue: 0
   };
-  
-  categories: string[] = ['Beverages', 'Snacks', 'Cleaning', 'Personal Care', 'Others'];
 
+  categories: string[] = ['Beverages', 'Snacks', 'Cleaning', 'Personal Care', 'Others'];
+  constructor(private cdr: ChangeDetectorRef) {}
+ 
   toggleForm(): void {
     this.isFormVisible = !this.isFormVisible;
+    this.cdr.detectChanges(); // Forzar el redibujado del modal
   }
 
   addProduct(): void {
-    if (this.newOrder.productName && this.newOrder.orderValue > 0 && this.newOrder.quantity > 0) {
-      const newOrderData: Order = {
-        product: this.newOrder.productName,
-        orderValue: this.newOrder.orderValue,
-        quantity: this.newOrder.quantity,
+    if (this.newProduct.productName && this.newProduct.productId && this.newProduct.category) {
+      const newProductData: Order = {
+        product: this.newProduct.productName,
+        orderValue: this.newProduct.buyingPrice * this.newProduct.quantity,
+        quantity: this.newProduct.quantity,
         orderId: this.generateOrderId(),
-        expectedDelivery: this.newOrder.deliveryDate,
-        status: 'Pending',
+        expectedDelivery: this.newProduct.expiryDate,
+        status: 'Pending'
       };
-      this.dataSet = [...this.dataSet, newOrderData];
-      console.log('New Product Added:', newOrderData);
+      this.dataSet = [...this.dataSet, newProductData];
+      console.log('New Product Added:', newProductData);
       this.resetForm();
     } else {
       alert('Please fill in all required fields!');
@@ -91,16 +92,15 @@ export default  class OrdersComponent {
   }
 
   resetForm(): void {
-    this.newOrder = {
+    this.newProduct = {
       productName: '',
       productId: '',
       category: '',
-      orderValue: 0,
+      buyingPrice: 0,
       quantity: 0,
       unit: '',
-      buyingPrice: 0,
-      deliveryDate: '',
-      notifyOnDelivery: false
+      expiryDate: '',
+      thresholdValue: 0
     };
     this.isFormVisible = false;
   }

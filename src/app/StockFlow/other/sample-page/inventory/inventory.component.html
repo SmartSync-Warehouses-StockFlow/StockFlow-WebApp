@@ -1,0 +1,177 @@
+<div class="orders-container">
+  <!-- Tarjeta para Overall Orders -->
+  <nz-card nzTitle="Overall Orders" [nzBordered]="true" class="overall-orders-card">
+    <div class="stats">
+      <div>
+        <span>Total Orders</span>
+        <strong>37</strong>
+      </div>
+      <div>
+        <span>Total Received</span>
+        <strong>32</strong>
+        <p>($25000 Revenue)</p>
+      </div>
+      <div>
+        <span>Total Returned</span>
+        <strong>5</strong>
+        <p>($2500 Cost)</p>
+      </div>
+      <div>
+        <span>On the way</span>
+        <strong>12</strong>
+        <p>($2356 Cost)</p>
+      </div>
+    </div>
+  </nz-card>
+
+  <!-- Tarjeta para Orders -->
+  <nz-card
+    nzTitle="Orders"
+    [nzBordered]="true"
+    class="orders-table-card"
+    [nzExtra]="addProductButton"
+  >
+    <ng-template #addProductButton>
+      <button nz-button nzType="primary" (click)="toggleForm()">Add Product</button>
+    </ng-template>
+
+    <!-- Tabla de órdenes -->
+    <nz-table
+      #basicTable
+      [nzBordered]="true"
+      [nzData]="dataSet"
+      [nzBordered]="true"
+      [nzSize]="'default'"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="25%">Products</th>
+          <th nzWidth="10%">Order Value</th>
+          <th nzWidth="12%">Quantity</th>
+          <th nzWidth="10%">Order ID</th>
+          <th nzWidth="15%">Expected Delivery</th>
+          <th nzWidth="15%">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of dataSet">
+          <td>{{ data.product }}</td>
+          <td>{{ data.orderValue | currency }}</td>
+          <td>{{ data.quantity }}</td>
+          <td>{{ data.orderId }}</td>
+          <td>{{ data.expectedDelivery }}</td>
+          <td [ngClass]="data.status.toLowerCase()">
+            {{ data.status }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <!-- Modal para Add Product -->
+  <div *ngIf="isFormVisible" class="new-product-modal">
+    <div class="modal-content">
+      <h4>New Product</h4>
+      <div class="image-upload">
+        <div class="upload-box">
+          <span>Drag image here</span>
+          <a href="#">or Browse image</a>
+        </div>
+      </div>
+  
+      <!-- Formulario -->
+      <form>
+        <div class="form-row">
+          <label for="productName">Product Name:</label>
+          <input
+            id="productName"
+            nz-input
+            type="text"
+            [(ngModel)]="newProduct.productName"
+            placeholder="Enter product name"
+          />
+        </div>
+        <div class="form-row">
+          <label for="productId">Product ID:</label>
+          <input
+            id="productId"
+            nz-input
+            type="text"
+            [(ngModel)]="newProduct.productId"
+            placeholder="Enter product ID"
+          />
+        </div>
+        <div class="form-row">
+          <label for="category">Category:</label>
+          <nz-select
+            id="category"
+            [(ngModel)]="newProduct.category"
+            nzPlaceHolder="Select product category"
+          >
+            <nz-option
+              *ngFor="let category of categories"
+              [nzValue]="category"
+              [nzLabel]="category"
+            ></nz-option>
+          </nz-select>
+        </div>
+        <div class="form-row">
+          <label for="buyingPrice">Buying Price:</label>
+          <input
+            id="buyingPrice"
+            nz-input
+            type="number"
+            [(ngModel)]="newProduct.buyingPrice"
+            placeholder="Enter buying price"
+          />
+        </div>
+        <div class="form-row">
+          <label for="quantity">Quantity:</label>
+          <input
+            id="quantity"
+            nz-input
+            type="number"
+            [(ngModel)]="newProduct.quantity"
+            placeholder="Enter product quantity"
+          />
+        </div>
+        <div class="form-row">
+          <label for="unit">Unit:</label>
+          <input
+            id="unit"
+            nz-input
+            type="text"
+            [(ngModel)]="newProduct.unit"
+            placeholder="Enter product unit"
+          />
+        </div>
+        <div class="form-row">
+          <label for="expiryDate">Expiry Date:</label>
+          <input
+            id="expiryDate"
+            nz-input
+            type="date"
+            [(ngModel)]="newProduct.expiryDate"
+          />
+        </div>
+        <div class="form-row">
+          <label for="thresholdValue">Threshold Value:</label>
+          <input
+            id="thresholdValue"
+            nz-input
+            type="number"
+            [(ngModel)]="newProduct.thresholdValue"
+            placeholder="Enter threshold value"
+          />
+        </div>
+      </form>
+  
+      <!-- Botones -->
+      <div class="button-container">
+        <button class="discard-button" nz-button nzType="default" (click)="toggleForm()">Discard</button>
+        <button class="add-product-button" nz-button nzType="primary" (click)="addProduct()">Add Product</button>
+      </div>
+    </div>
+  </div>
+  
+  

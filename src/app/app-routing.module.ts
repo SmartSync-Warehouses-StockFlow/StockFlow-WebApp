@@ -39,6 +39,14 @@ const routes: Routes = [
       {
         path:'orders',
         loadComponent:()=> import('./StockFlow/other/sample-page/orders/orders.component')
+      },
+      {
+        path: 'inventory',
+        loadComponent:() => import ('./StockFlow/other/sample-page/inventory/inventory.component')
+      },
+      {path:'suppliers',
+        loadComponent:() =>import ('./StockFlow/other/sample-page/suppliers/suppliers.component')
+
       }
     ]
   },

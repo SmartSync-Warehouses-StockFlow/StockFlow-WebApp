@@ -59,7 +59,7 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/suppliers',
         icon: 'team',
-        target: true,
+     
         breadcrumbs: false
       },
       {

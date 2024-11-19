@@ -1,0 +1,105 @@
+<div class="card">
+  <!-- Encabezado de la tabla -->
+  <div class="table-header">
+    <h2>Suppliers</h2>
+    <div class="table-actions">
+      <button nz-button nzType="primary" nzValue="large" (click)="toggleForm()">Add Supplier</button>
+      <button nz-button nzType="default" (click)="applyFilters()">Filters</button>
+      <button nz-button nzType="default" (click)="downloadAll()">Download All</button>
+    </div>
+  </div>
+
+  <!-- Modal para agregar un nuevo proveedor -->
+  <div *ngIf="isFormVisible" class="new-supplier-modal">
+    <div class="modal-content">
+      <h4>New Supplier</h4>
+      <div class="profile-picture">
+        <div class="image-placeholder">
+          <span>Drag image here</span> or <a href="#">Browse image</a>
+        </div>
+      </div>
+
+      <!-- Campos del formulario -->
+      <label>
+        Supplier Name:
+        <input type="text" [(ngModel)]="newSupplier.supplierName" placeholder="Enter supplier name" />
+      </label>
+      <label>
+        Product:
+        <input type="text" [(ngModel)]="newSupplier.product" placeholder="Enter product" />
+      </label>
+      <label>
+        Category:
+        <select [(ngModel)]="newSupplier.category">
+          <option>Select product category</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </label>
+      <label>
+        Buying Price:
+        <input type="number" [(ngModel)]="newSupplier.buyingPrice" placeholder="Enter buying price" />
+      </label>
+      <label>
+        Contact Number:
+        <input type="text" [(ngModel)]="newSupplier.contactNumber" placeholder="Enter supplier contact number" />
+      </label>
+
+      <!-- Tipo de devolución (radios) -->
+      <div class="type-container">
+        <label class="radio">
+          <input type="radio" name="returnType" [(ngModel)]="newSupplier.type" value="Not taking return" />
+          Not taking return
+        </label>
+        <label class="radio">
+          <input type="radio" name="returnType" [(ngModel)]="newSupplier.type" value="Taking return" />
+          Taking return
+        </label>
+      </div>
+
+      <!-- Botones del modal -->
+      <div class="button-container">
+        <button class="discard-button" (click)="toggleForm()">Discard</button>
+        <button class="add-button" (click)="addSupplier()">Add Supplier</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de proveedores -->
+  <nz-table
+    [nzData]="filteredSuppliers"
+    [nzBordered]="true"
+    [nzSize]="'middle'"
+    [nzShowPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th nzShowSort [nzSortFn]="sortName">Supplier Name</th>
+        <th nzShowSort [nzSortFn]="sortProduct">Product</th>
+        <th>Contact Number</th>
+        <th>Email</th>
+        <th>Type</th>
+        <th nzShowSort [nzSortFn]="sortOnTheWay">On the Way</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let supplier of filteredSuppliers">
+        <td>{{ supplier.supplierName }}</td>
+        <td>{{ supplier.product }}</td>
+        <td>{{ supplier.contactNumber }}</td>
+        <td>{{ supplier.email }}</td>
+        <td [ngClass]="supplier.type === 'Taking Return' ? 'success' : 'error'">{{ supplier.type }}</td>
+        <td [ngClass]="supplier.onTheWay > 0 ? 'success' : 'error'">{{ supplier.onTheWay }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <!-- Paginación -->
+  <div class="table-pagination">
+    <nz-pagination
+      [nzPageSize]="pageSize"
+      [nzTotal]="listOfSuppliers.length"
+      [(nzPageIndex)]="pageIndex"
+      (nzPageIndexChange)="onPageChange($event)"
+    ></nz-pagination>
+  </div>
+</div>

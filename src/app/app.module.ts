@@ -9,6 +9,13 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 
+import { NzTableModule } from 'ng-zorro-antd/table'; // Importa NzTableModule
+import { NzButtonModule } from 'ng-zorro-antd/button'; // Para botones como el "Add Product"
+import { NzPaginationModule } from 'ng-zorro-antd/pagination'; // Para la paginación
+import { NzCardModule } from 'ng-zorro-antd/card';
+
+
+
 // project import
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +34,10 @@ const icons: IconDefinition[] = Object.values(antDesignIcons);
     SharedModule,
     BrowserAnimationsModule,
     NzIconModule, // Importamos NzIconModule
+    NzTableModule, // Añade el módulo de tabla de NG-ZORRO
+    NzButtonModule, // Añade el módulo de botón de NG-ZORRO si lo estás usando
+    NzPaginationModule, 
+    NzCardModule
   ],
   providers: [
     { provide: NZ_ICONS, useValue: icons }, // Registramos los iconos aquí
