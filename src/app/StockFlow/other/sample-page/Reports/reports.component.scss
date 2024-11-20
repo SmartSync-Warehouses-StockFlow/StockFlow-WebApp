@@ -1,0 +1,162 @@
+.orders-container {
+  padding: 20px;
+
+  .overall-orders-card,
+  .orders-table-card {
+    margin-bottom: 20px;
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+
+      div {
+        flex: 1;
+        text-align: center;
+        background: #f9f9f9;
+        padding: 15px;
+        margin: 5px;
+        border-radius: 8px;
+
+        span {
+          display: block;
+          font-size: 14px;
+          color: #666;
+        }
+
+        strong {
+          font-size: 20px;
+          color: #333;
+        }
+
+        p {
+          font-size: 12px;
+          color: #888;
+        }
+      }
+    }
+  }
+
+  .new-product-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .modal-content {
+      background: white;
+      width: 450px;
+      padding: 10px;
+      margin-top: 55px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      h4 {
+        text-align: center;
+
+        font-weight: bold;
+      }
+
+      .image-upload {
+        display: flex;
+        justify-content: center;
+
+        .upload-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 130px;
+          height: 130px;
+          border: 2px dashed #d9d9d9;
+          border-radius: 8px;
+          text-align: center;
+
+          span {
+            font-size: 14px;
+            color: #888;
+          }
+
+          a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .form-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          label {
+            width: 40%;
+            font-size: 14px;
+            text-align: left;
+          }
+
+          input,
+          nz-select {
+            width: 55%;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+          }
+        }
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+
+
+        .discard-button {
+          padding: 8px 16px;
+          border-radius: 4px;
+          background-color: #f0f0f0;
+          color: #333;
+          border: 1px solid #ccc;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #d9d9d9;
+          }
+        }
+
+        .add-product-button {
+          padding: 8px 16px;
+          border-radius: 4px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+    }
+  }
+
+
+}

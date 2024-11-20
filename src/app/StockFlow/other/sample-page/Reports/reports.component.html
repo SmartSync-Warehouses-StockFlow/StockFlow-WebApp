@@ -1,40 +1,88 @@
-<div class="orders-container">
+<div class="row" >
+  <div  style="width: 50%">
+    <h5 class="mb-3">Sales Overview</h5>
+    <div class="row">
+    @for (analytic of Overview1; track analytic) {
+      <div class="col-md-6 col-xl-3">
+        <app-card [showHeader]="false" blockClass="dashboard-card">
+          <h4 class="mb-3">
+            {{ analytic.amount }}
+          </h4>
+          <h6 class="mb-2 f-w-400 text-muted">{{ analytic.title }}</h6>
+        </app-card>
+      </div>
+    }</div>
+    <div class="row">
+      @for (analytic of Overview2; track analytic) {
+        <div class="col-md-6 col-xl-3">
+          <app-card [showHeader]="false" blockClass="dashboard-card">
+            <h4 class="mb-3">
+              {{ analytic.amount }}
+            </h4>
+            <h6 class="mb-2 f-w-400 text-muted">{{ analytic.title }}</h6>
+          </app-card>
+        </div>
+      }</div>
+  </div>
+  <div  style="width: 50%">
+    <h5 class="mb-3">Best selling category</h5>
+    <nz-table
+      #basicTable
+      [nzBordered]="true"
+      [nzData]="dataSet"
+      [nzBordered]="true"
+      [nzSize]="'default'"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="25%">Category</th>
+        <th nzWidth="10%">Turn Over</th>
+        <th nzWidth="12%">Increase By</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of dataSet1">
+        <td>{{ data.category }}</td>
+        <td>${{ data.turnOver }}</td>
+        <td>{{ data.Increase }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
 
-  <nz-card nzTitle="Overall Orders" [nzBordered]="true" class="overall-orders-card">
-    <div class="stats">
-      <div>
-        <span>Total Orders</span>
-        <strong>37</strong>
-      </div>
-      <div>
-        <span>Total Received</span>
-        <strong>32</strong>
-        <p>($25000 Revenue)</p>
-      </div>
-      <div>
-        <span>Total Returned</span>
-        <strong>5</strong>
-        <p>($2500 Cost)</p>
-      </div>
-      <div>
-        <span>On the way</span>
-        <strong>12</strong>
-        <p>($2356 Cost)</p>
-      </div>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+  <h5 class="mb-0">Profit  & Revenue</h5>
+  <div class="d-flex gap-2 chart-income">
+    <div class="chart-income month" (click)="toggleActive('month')">Month</div>
+    <div class="chart-income week" (click)="toggleActive('week')">Week</div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div id="chart">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [dataLabels]="chartOptions.dataLabels"
+        [xaxis]="chartOptions.xaxis"
+        [colors]="chartOptions.colors"
+        [stroke]="chartOptions.stroke"
+        [yaxis]="chartOptions.yaxis"
+        [grid]="chartOptions.grid"
+        [theme]="chartOptions.theme"
+      ></apx-chart>
     </div>
-  </nz-card>
+  </div>
+</div>
 
 
+<div class="orders-container">
   <nz-card
-    nzTitle="Orders"
+    nzTitle="Best selling product"
     [nzBordered]="true"
     class="orders-table-card"
-    [nzExtra]="addProductButton"
   >
-    <ng-template #addProductButton>
-      <button nz-button nzType="primary" (click)="toggleForm()">Add Product</button>
-    </ng-template>
-
 
     <nz-table
       #basicTable
@@ -44,26 +92,24 @@
       [nzSize]="'default'"
     >
       <thead>
-        <tr>
-          <th nzWidth="25%">Products</th>
-          <th nzWidth="10%">Order Value</th>
-          <th nzWidth="12%">Quantity</th>
-          <th nzWidth="10%">Order ID</th>
-          <th nzWidth="15%">Expected Delivery</th>
-          <th nzWidth="15%">Status</th>
-        </tr>
+      <tr>
+        <th nzWidth="25%">Product</th>
+        <th nzWidth="10%">Product ID</th>
+        <th nzWidth="12%">Category</th>
+        <th nzWidth="10%">Remaining Quantity</th>
+        <th nzWidth="15%">Turn Over</th>
+        <th nzWidth="15%">Increase By</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of dataSet">
-          <td>{{ data.product }}</td>
-          <td>{{ data.orderValue | currency }}</td>
-          <td>{{ data.quantity }}</td>
-          <td>{{ data.orderId }}</td>
-          <td>{{ data.expectedDelivery }}</td>
-          <td [ngClass]="data.status.toLowerCase()">
-            {{ data.status }}
-          </td>
-        </tr>
+      <tr *ngFor="let data of dataSet">
+        <td>{{ data.product }}</td>
+        <td>{{ data.productId | currency }}</td>
+        <td>{{ data.category }}</td>
+        <td>{{ data.quantity }} Kg</td>
+        <td>{{ data.turnOver }}</td>
+        <td>{{ data.Increase }}</td>
+      </tr>
       </tbody>
     </nz-table>
   </nz-card>
@@ -169,7 +215,6 @@
       <!-- Botones -->
       <div class="button-container">
         <button class="discard-button" nz-button nzType="default" (click)="toggleForm()">Discard</button>
-        <button class="add-product-button" nz-button nzType="primary" (click)="addProduct()">Add Product</button>
       </div>
     </div>
   </div>

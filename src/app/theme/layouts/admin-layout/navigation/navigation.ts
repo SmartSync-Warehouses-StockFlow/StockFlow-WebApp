@@ -44,7 +44,7 @@ export const NavigationItems: NavigationItem[] = [
         breadcrumbs: false
       },
       {
-        id: 'reports',
+        id: 'Reports',
         title: 'Reports',
         type: 'item',
         classes: 'nav-item',
@@ -59,7 +59,7 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/suppliers',
         icon: 'team',
-     
+
         breadcrumbs: false
       },
       {
@@ -79,7 +79,7 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/manage-store',
         icon: 'manage',
-       
+
         breadcrumbs: false
       }
     ]
