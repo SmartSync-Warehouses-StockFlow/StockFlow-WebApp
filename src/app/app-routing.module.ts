@@ -5,10 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 // Project import
 import { AdminComponent } from './theme/layouts/admin-layout/admin-layout.component';
 import { GuestComponent } from './theme/layouts/guest/guest.component';
-import { SettingComponent } from './StockFlow/setting/setting.component';
-import {ProfileComponent} from './StockFlow/profile/profile.component';
 
-import {ReportsComponent} from './StockFlow/other/sample-page/Reports/reports.component';
 const routes: Routes = [
   {
     path: '',

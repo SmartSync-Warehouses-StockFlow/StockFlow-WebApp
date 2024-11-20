@@ -1,11 +1,9 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    // "strict": true,
     "resolveJsonModule": true,
     "noImplicitOverride": true,
     "allowSyntheticDefaultImports": true,
@@ -28,5 +26,7 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": ["src/**/*.ts"],  // Agregado
+  "exclude": ["node_modules", "dist"] // Opcional, para evitar errores de compilación externos
 }
