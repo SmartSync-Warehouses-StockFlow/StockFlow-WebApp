@@ -1,21 +1,22 @@
 <div class="container">
   <div class="form-section">
     <h2>FREE PLAN</h2>
-    <form>
+    <form [formGroup]="userForm" (ngSubmit)="saveProfileChanges()">
       <label for="name">Name*</label>
-      <input type="text" id="name" placeholder="John Chavez">
+      <input type="text" id="name" placeholder="John Chavez" formControlName="username" name="name">
+      <!-- El username está deshabilitado porque no se puede cambiar -->
 
       <label for="email">Email*</label>
-      <input type="email" id="email" placeholder="johchv@gmail.com">
+      <input type="email" id="email" placeholder="johchv@gmail.com" formControlName="email" name="email">
 
       <label for="cellphone">Cellphone*</label>
-      <input type="text" id="cellphone" placeholder="999325448">
+      <input type="text" id="cellphone" placeholder="999325448" formControlName="phone" name="cellphone">
 
       <label for="address">Address*</label>
-      <input type="text" id="address" placeholder="Av. El ejercito 154">
+      <input type="text" id="address" placeholder="Av. El ejercito 154" formControlName="direction" name="direction">
 
       <div class="button-group">
-        <button type="submit" class="edit-btn">Edit</button>
+        <button type="button" class="edit-btn" (click)="changeProfilePhoto()">Edit</button>
         <button type="submit" class="save-btn">Save</button>
       </div>
     </form>
