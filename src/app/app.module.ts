@@ -20,6 +20,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './theme/shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -36,8 +38,11 @@ const icons: IconDefinition[] = Object.values(antDesignIcons);
     NzIconModule, // Importamos NzIconModule
     NzTableModule, // Añade el módulo de tabla de NG-ZORRO
     NzButtonModule, // Añade el módulo de botón de NG-ZORRO si lo estás usando
-    NzPaginationModule, 
-    NzCardModule
+    NzPaginationModule,
+    NzCardModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
+
   ],
   providers: [
     { provide: NZ_ICONS, useValue: icons }, // Registramos los iconos aquí

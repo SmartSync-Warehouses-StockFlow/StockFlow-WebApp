@@ -1,3 +1,5 @@
+<!-- src/app/StockFlow/authentication/register/register.component.html -->
+
 <div class="auth-main">
   <div class="auth-wrapper v3">
     <div class="auth-form">
@@ -10,64 +12,75 @@
             <h3 class="mb-0"><b>Sign up</b></h3>
             <a [routerLink]="['/login']" class="link-primary">Already have an account?</a>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group mb-3">
-                <label class="form-label" for="firstName">First Name*</label>
-                <input type="text" class="form-control" id="firstName" placeholder="First Name" />
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="firstName">First Name*</label>
+                  <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First Name" />
+                  <div *ngIf="submitted && f.firstName.errors" class="text-danger">
+                    <small *ngIf="f.firstName.errors">First Name is required</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="lastName">Last Name*</label>
+                  <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name" />
+                  <div *ngIf="submitted && f.lastName.errors" class="text-danger">
+                    <small *ngIf="f.lastName.errors">Last Name is required</small>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group mb-3">
-                <label class="form-label" for="lastName">Last Name*</label>
-                <input type="text" class="form-control" id="lastName" placeholder="Last Name" />
+            <div class="form-group mb-3">
+              <label class="form-label" for="emailAddress">Email Address*</label>
+              <input type="email" class="form-control" id="emailAddress" formControlName="email" placeholder="Email Address" />
+              <div *ngIf="submitted && f.email.errors" class="text-danger">
+                <small *ngIf="f.email.errors">Email is required</small>
+                <small *ngIf="f.email.errors">Email must be a valid email address</small>
               </div>
             </div>
-          </div>
-          <div class="form-group mb-3">
-            <label class="form-label" for="emailAddress">Email Address*</label>
-            <input type="email" class="form-control" id="emailAddress" placeholder="Email Address" />
-          </div>
-          <div class="form-group mb-3">
-            <label class="form-label" for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" />
-          </div>
-          <p class="mt-4 text-sm text-muted">
-            By Signing up, you agree to our
-            <a href="javascript:" class="text-primary">Terms of Service</a>
-            and
-            <a href="javascript:" class="text-primary">Privacy Policy</a>
-          </p>
-          <div class="d-grid mt-3">
-            <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/default']">Create Account</button>
-          </div>
-          <div class="saprator mt-3">
-            <span>Sign up with</span>
-          </div>
-          <div class="row">
-            @for (item of SignUpOptions; track item) {
-              <div class="col-4">
+            <div class="form-group mb-3">
+              <label class="form-label" for="password">Password*</label>
+              <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" />
+              <div *ngIf="submitted && f.password.errors" class="text-danger">
+                <small *ngIf="f.password.errors">Password is required</small>
+                <small *ngIf="f.password.errors">Password must be at least 6 characters</small>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-muted">
+              By Signing up, you agree to our
+              <a href="javascript:" class="text-primary">Terms of Service</a>
+              and
+              <a href="javascript:" class="text-primary">Privacy Policy</a>
+            </p>
+            <div class="d-grid mt-3">
+              <button type="submit" class="btn btn-primary">Create Account</button>
+            </div>
+            <div class="saprator mt-3">
+              <span>Sign up with</span>
+            </div>
+            <div class="row">
+              <div class="col-4" *ngFor="let item of SignUpOptions">
                 <div class="d-grid">
                   <button type="button" class="btn mt-2 btn-light-primary bg-light text-muted">
-                    <img src="{{ item.image }}" alt="google img" />
+                    <img [src]="item.image" alt="{{item.name}} img" />
                     <span class="d-none d-sm-inline-block">{{ item.name }}</span>
                   </button>
                 </div>
               </div>
-            }
-          </div>
+            </div>
+          </form>
         </div>
       </div>
       <div class="auth-footer row">
-        <!-- <div class=""> -->
         <div class="col my-1">
           <p class="m-0">
             Copyright ©
             <a href="https://codedthemes.com/" target="_blank">StockFlow</a>
           </p>
         </div>
-
-        <!-- </div> -->
       </div>
     </div>
   </div>
