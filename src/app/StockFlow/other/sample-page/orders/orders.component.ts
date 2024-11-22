@@ -77,7 +77,7 @@ export  class OrdersComponent implements OnInit {
             this.dataSet = products
           },
           error: (error: any) => {
-            console.error('Error fetching products:', error);
+            console.error('Error fetching orders:', error);
           },
 
       });
