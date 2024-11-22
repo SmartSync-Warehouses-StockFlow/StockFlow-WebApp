@@ -4,27 +4,27 @@
     <div class="stats">
       <div>
         <span>Total Orders</span>
-        <strong>37</strong>
+        <strong>{{ dataSet.length }}</strong>
       </div>
       <div>
         <span>Total Received</span>
-        <strong>32</strong>
-        <p>($25000 Revenue)</p>
+        <strong>{{ getTotalReceived() }}</strong>
+        <p>(${{ getTotalRevenue() }} Revenue)</p>
       </div>
       <div>
         <span>Total Returned</span>
-        <strong>5</strong>
-        <p>($2500 Cost)</p>
+        <strong>{{ getTotalReturned() }}</strong>
+        <p>(${{ getTotalCost() }} Cost)</p>
       </div>
       <div>
         <span>On the way</span>
-        <strong>12</strong>
-        <p>($2356 Cost)</p>
+        <strong>{{ getTotalOnTheWay() }}</strong>
+        <p>(${{ getTotalOnTheWayCost() }} Cost)</p>
       </div>
     </div>
   </nz-card>
 
-
+  <!-- Tarjeta para Orders -->
   <nz-card
     nzTitle="Orders"
     [nzBordered]="true"
@@ -40,29 +40,24 @@
       #basicTable
       [nzBordered]="true"
       [nzData]="dataSet"
-      [nzBordered]="true"
       [nzSize]="'default'"
     >
       <thead>
         <tr>
-          <th nzWidth="25%">Products</th>
-          <th nzWidth="10%">Order Value</th>
-          <th nzWidth="12%">Quantity</th>
-          <th nzWidth="10%">Order ID</th>
-          <th nzWidth="15%">Expected Delivery</th>
-          <th nzWidth="15%">Status</th>
+          <th nzWidth="25%">Producto</th>
+          <th nzWidth="15%">Valor del Pedido</th>
+          <th nzWidth="15%">Cantidad</th>
+          <th nzWidth="15%">Fecha</th>
+          <th nzWidth="15%">Estado</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of dataSet">
-          <td>{{ data.product }}</td>
+          <td>{{ data.name }}</td>
           <td>{{ data.orderValue | currency }}</td>
           <td>{{ data.quantity }}</td>
-          <td>{{ data.orderId }}</td>
-          <td>{{ data.expectedDelivery }}</td>
-          <td [ngClass]="data.status.toLowerCase()">
-            {{ data.status }}
-          </td>
+          <td>{{ data.date }}</td>
+          <td>{{ data.status }}</td>
         </tr>
       </tbody>
     </nz-table>
@@ -74,18 +69,7 @@
       <h4>New Order</h4>
       <label>
         Product Name:
-        <input type="text" [(ngModel)]="newOrder.productName" placeholder="Enter product name" />
-      </label>
-      <label>
-        Product ID:
-        <input type="text" [(ngModel)]="newOrder.productId" placeholder="Enter product ID" />
-      </label>
-      <label>
-        Category:
-        <select [(ngModel)]="newOrder.category">
-          <option>Select product category</option>
-          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-        </select>
+        <input type="text" [(ngModel)]="newOrder.name" placeholder="Enter product name" />
       </label>
       <label>
         Order value:
@@ -96,20 +80,12 @@
         <input type="number" [(ngModel)]="newOrder.quantity" placeholder="Enter product quantity" />
       </label>
       <label>
-        Unit:
-        <input type="text" [(ngModel)]="newOrder.unit" placeholder="Enter product unit" />
-      </label>
-      <label>
-        Buying price:
-        <input type="number" [(ngModel)]="newOrder.buyingPrice" placeholder="Enter buying price" />
-      </label>
-      <label>
         Date of delivery:
-        <input type="date" [(ngModel)]="newOrder.deliveryDate" />
+        <input type="date" [(ngModel)]="newOrder.date" />
       </label>
       <label>
-        <input type="checkbox" [(ngModel)]="newOrder.notifyOnDelivery" />
-        Notify on the date of delivery
+        Status:
+        <input type="text" [(ngModel)]="newOrder.status" placeholder="Enter product status" />
       </label>
 
       <div class="button-container">
