@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
 import { Router } from '@angular/router'; // Para la redirección si es necesario
-import UserService from 'src/app/Service/Userservice'; // Asegúrate de importar el servicio
+import UserService from 'src/app/Service/userservice'; // Asegúrate de importar el servicio
 import { CommonModule } from '@angular/common'; // Importa CommonModule
 import { FormsModule } from '@angular/forms';  // Importa FormsModule para ngModel
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';  // Importa Router y RouterModule
-import  UserService  from 'src/app/Service/Userservice';  // Asegúrate de que la importación sea correcta
+import  UserService  from 'src/app/Service/userservice';  // Asegúrate de que la importación sea correcta
 import { FormsModule } from '@angular/forms';  // Importa FormsModule para ngModel
 import { CommonModule } from '@angular/common';  // Importa CommonModule para usar ngFor
 

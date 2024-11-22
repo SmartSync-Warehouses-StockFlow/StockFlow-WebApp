@@ -15,8 +15,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination'; // Para la pagina
 import { NzCardModule } from 'ng-zorro-antd/card';
 
 
-import UserService  from 'src/app/Service/Userservice';
-import SupplierService  from 'src/app/Service/supplierservice';
+import UserService  from 'src/app/Service/userservice';
+import SupplierService  from './Service/supplierservice';
 import OrderService  from 'src/app/Service/orderservice';
 import { RouterModule } from '@angular/router';  // Asegúrate de importar RouterModule
 import { FormsModule } from '@angular/forms'; // Asegúrate de importar FormsModule
@@ -51,7 +51,7 @@ const icons: IconDefinition[] = Object.values(antDesignIcons);
     { provide: NZ_ICONS, useValue: icons }, 
     UserService ,
     SupplierService,
-    OrderService// Registramos los iconos aquí
+    OrderService,// Registramos los iconos aquí
     provideHttpClient(withInterceptorsFromDi())
 
   ],
