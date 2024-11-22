@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
 import { Router } from '@angular/router'; // Para la redirección si es necesario
@@ -41,7 +40,7 @@ interface Order {
     NzPaginationModule, 
   ],
 })
-export default  class OrdersComponent implements OnInit {
+export  class OrdersComponent implements OnInit {
   username: string | null = localStorage.getItem('username'); // Recuperar el username desde localStorage
 
   constructor(
@@ -73,9 +72,14 @@ export default  class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
       // Llamar al servicio para obtener los datos del usuario usando el username
-      this.orderService.getUserByOrder(this.username).subscribe((data) => {
-          this.dataSet = data
-          
+      this.orderService.getUserByOrder(this.username).subscribe({
+          next: (products: Order[]) => {
+            this.dataSet = products
+          },
+          error: (error: any) => {
+            console.error('Error fetching products:', error);
+          },
+
       });
   }
 
