@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
@@ -6,6 +5,20 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import SupplierService from 'src/app/Service/supplierservice';
+import { Router } from '@angular/router'; // Para la redirección si es necesario
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
+
+
+interface Supplier {
+  supplierName: string;
+  product: string;
+  contactNumber: string;
+  email: string;
+  type: string;
+  onTheWay: number;
+}
 
 @Component({
   selector: 'app-suppliers',
@@ -22,28 +35,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './suppliers.component.html',
   styleUrls: ['./suppliers.component.scss']
 })
-export default class SuppliersComponent {
+export default class SuppliersComponent implements OnInit {
+  username: string | null = localStorage.getItem('username'); // Recuperar el username desde localStorage
+
   // Variables para la tabla
   isLoading: boolean = false;
   pageIndex: number = 1;
   pageSize: number = 10;
   filteredSuppliers: any[] = [];
-  listOfSuppliers: any[] = [
-    { supplierName: 'Richard Martin', product: 'Kit Kat', contactNumber: '7687764556', email: 'richard@gmail.com', type: 'Taking Return', onTheWay: 13 },
-    { supplierName: 'Tom Homan', product: 'Maaza', contactNumber: '9867545368', email: 'tomhoman@gmail.com', type: 'Taking Return', onTheWay: 0 },
-    { supplierName: 'Veandir', product: 'Dairy Milk', contactNumber: '9867545566', email: 'veandir@gmail.com', type: 'Not Taking Return', onTheWay: 0 },
-    { supplierName: 'Charin F.', product: 'Tomatoes', contactNumber: '9234567890', email: 'charin@gmail.com', type: 'Taking Return', onTheWay: 8 },
-    { supplierName: 'Susan Green', product: 'Green Tea', contactNumber: '9012345678', email: 'susan.green@gmail.com', type: 'Not Taking Return', onTheWay: 3 },
-    { supplierName: 'Ahmed Khan', product: 'Biscuits', contactNumber: '8123456789', email: 'ahmed.khan@gmail.com', type: 'Taking Return', onTheWay: 5 },
-    { supplierName: 'Ella Morgan', product: 'Detergent', contactNumber: '7890123456', email: 'ella.morgan@gmail.com', type: 'Not Taking Return', onTheWay: 2 },
-    { supplierName: 'John Carter', product: 'Chocolates', contactNumber: '6789012345', email: 'john.carter@gmail.com', type: 'Taking Return', onTheWay: 6 },
-    { supplierName: 'Marie Hudson', product: 'Cooking Oil', contactNumber: '5678901234', email: 'marie.hudson@gmail.com', type: 'Taking Return', onTheWay: 9 },
-    { supplierName: 'David Black', product: 'Coffee', contactNumber: '4567890123', email: 'david.black@gmail.com', type: 'Not Taking Return', onTheWay: 4 },
-    { supplierName: 'Hannah Brown', product: 'Shampoo', contactNumber: '3456789012', email: 'hannah.brown@gmail.com', type: 'Taking Return', onTheWay: 7 },
-    { supplierName: 'Liam White', product: 'Sugar', contactNumber: '2345678901', email: 'liam.white@gmail.com', type: 'Taking Return', onTheWay: 10 },
-    { supplierName: 'Sophia Gray', product: 'Pasta', contactNumber: '1234567890', email: 'sophia.gray@gmail.com', type: 'Not Taking Return', onTheWay: 1 }
-  ];
-  
+  listOfSuppliers: Supplier[] = [];
 
   isFormVisible: boolean = false;
   newSupplier: any = {
@@ -56,10 +56,26 @@ export default class SuppliersComponent {
   };
   categories: string[] = ['Beverages', 'Snacks', 'Cleaning', 'Personal Care', 'Others'];
 
-  constructor() {
+  constructor(
+    private supplierService: SupplierService,
+    private router: Router, // Inyectar Router
+    private fb: FormBuilder 
+  ) {
     this.updateFilteredSuppliers();
   }
 
+  ngOnInit(): void {
+    // Llamar al servicio para obtener los datos del usuario usando el username
+    this.supplierService.getSupplier(this.username).subscribe({
+        next: (supplier: Supplier[]) => {
+          this.listOfSuppliers = supplier
+        },
+        error: (error: any) => {
+          console.error('Error fetching supplier:', error);
+        },
+
+    });
+}
 
   updateFilteredSuppliers(): void {
     const startIndex = (this.pageIndex - 1) * this.pageSize;
