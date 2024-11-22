@@ -6,6 +6,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import SupplierService from 'src/app/Service/supplierservice';
+import { Router } from '@angular/router'; // Para la redirección si es necesario
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
 
 
 interface Supplier {
@@ -33,6 +36,8 @@ interface Supplier {
   styleUrls: ['./suppliers.component.scss']
 })
 export default class SuppliersComponent implements OnInit {
+  username: string | null = localStorage.getItem('username'); // Recuperar el username desde localStorage
+
   // Variables para la tabla
   isLoading: boolean = false;
   pageIndex: number = 1;
@@ -51,18 +56,22 @@ export default class SuppliersComponent implements OnInit {
   };
   categories: string[] = ['Beverages', 'Snacks', 'Cleaning', 'Personal Care', 'Others'];
 
-  constructor() {
+  constructor(
+    private supplierService: SupplierService,
+    private router: Router, // Inyectar Router
+    private fb: FormBuilder 
+  ) {
     this.updateFilteredSuppliers();
   }
 
   ngOnInit(): void {
     // Llamar al servicio para obtener los datos del usuario usando el username
-    this.orderService.getUserByOrder(this.username).subscribe({
-        next: (products: Order[]) => {
-          this.dataSet = products
+    this.supplierService.getSupplier(this.username).subscribe({
+        next: (supplier: Supplier[]) => {
+          this.listOfSuppliers = supplier
         },
         error: (error: any) => {
-          console.error('Error fetching products:', error);
+          console.error('Error fetching supplier:', error);
         },
 
     });
