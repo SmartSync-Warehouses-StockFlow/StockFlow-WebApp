@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-
-
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
+import { Router } from '@angular/router'; // Para la redirección si es necesario
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -11,6 +12,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import OrderService from 'src/app/Service/orderservice';
 
 interface Order {
   product: string;
@@ -39,18 +41,19 @@ interface Order {
     NzPaginationModule, 
   ],
 })
-export default  class OrdersComponent {
-  dataSet: Order[] = [
-    { product: 'Maggi', orderValue: 4306, quantity: 43, orderId: '7535', expectedDelivery: '11/12/22', status: 'Delayed' },
-    { product: 'Bru', orderValue: 2557, quantity: 22, orderId: '5724', expectedDelivery: '21/12/22', status: 'Confirmed' },
-    { product: 'Red Bull', orderValue: 4075, quantity: 36, orderId: '2775', expectedDelivery: '5/12/22', status: 'Returned' },
-    { product: 'Bourn Vita', orderValue: 5052, quantity: 14, orderId: '2275', expectedDelivery: '8/12/22', status: 'Out for delivery' },
-    { product: 'Horlicks', orderValue: 5370, quantity: 5, orderId: '2427', expectedDelivery: '9/1/23', status: 'Returned' },
-    { product: 'Harpic', orderValue: 6065, quantity: 10, orderId: '2578', expectedDelivery: '9/1/23', status: 'Out for delivery' },
-    { product: 'Ariel', orderValue: 4078, quantity: 23, orderId: '2757', expectedDelivery: '15/12/23', status: 'Delayed' },
-    { product: 'Scotch Brite', orderValue: 3559, quantity: 43, orderId: '3757', expectedDelivery: '6/6/23', status: 'Confirmed' },
-    { product: 'Coca Cola', orderValue: 2055, quantity: 41, orderId: '2474', expectedDelivery: '11/11/22', status: 'Delayed' }
-  ];
+export default  class OrdersComponent implements OnInit {
+  username: string | null = localStorage.getItem('username'); // Recuperar el username desde localStorage
+
+  constructor(
+    private orderService: OrderService,
+    private router: Router, // Inyectar Router
+    private fb: FormBuilder // Inyectar FormBuilder
+  ) {
+    // Crear el formulario reactivo
+  }
+
+
+  dataSet: Order[] = [];
   
   isFormVisible: boolean = false;
   
@@ -67,6 +70,14 @@ export default  class OrdersComponent {
   };
   
   categories: string[] = ['Beverages', 'Snacks', 'Cleaning', 'Personal Care', 'Others'];
+
+  ngOnInit(): void {
+      // Llamar al servicio para obtener los datos del usuario usando el username
+      this.orderService.getUserByOrder(this.username).subscribe((data) => {
+          this.dataSet = data
+          
+      });
+  }
 
   toggleForm(): void {
     this.isFormVisible = !this.isFormVisible;
