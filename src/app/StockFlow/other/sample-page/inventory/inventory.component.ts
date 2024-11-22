@@ -1,6 +1,7 @@
-import { Component,ChangeDetectorRef  } from '@angular/core';
-
-
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { ProductService } from 'src/app/Service/productservice'; // Ajusta la ruta
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -9,16 +10,22 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
-interface Order {
-  product: string;
-  orderValue: number;
-  quantity: number;
-  orderId: string;
+// Define la interfaz Product
+interface Product {
+  status: any;
   expectedDelivery: string;
-  status: string;
+  orderId: string;
+  orderValue: number;
+  product: string;
+  productName: string;
+  productId: string;
+  category: string;
+  buyingPrice: number;
+  quantity: number;
+  unit: string;
+  expiryDate: string;
+  thresholdValue: number;
 }
 
 @Component({
@@ -37,24 +44,22 @@ interface Order {
     NzPaginationModule,
   ],
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.scss']
+  styleUrls: ['./inventory.component.scss'],
 })
 export default class InventoryComponent {
-  dataSet: Order[] = [
-    { product: 'Maggi', orderValue: 4306, quantity: 43, orderId: '7535', expectedDelivery: '11/12/22', status: 'Delayed' },
-    { product: 'Bru', orderValue: 2557, quantity: 22, orderId: '5724', expectedDelivery: '21/12/22', status: 'Confirmed' },
-    { product: 'Red Bull', orderValue: 4075, quantity: 36, orderId: '2775', expectedDelivery: '5/12/22', status: 'Returned' },
-    { product: 'Bourn Vita', orderValue: 5052, quantity: 14, orderId: '2275', expectedDelivery: '8/12/22', status: 'Out for delivery' },
-    { product: 'Horlicks', orderValue: 5370, quantity: 5, orderId: '2427', expectedDelivery: '9/1/23', status: 'Returned' },
-    { product: 'Harpic', orderValue: 6065, quantity: 10, orderId: '2578', expectedDelivery: '9/1/23', status: 'Out for delivery' },
-    { product: 'Ariel', orderValue: 4078, quantity: 23, orderId: '2757', expectedDelivery: '15/12/23', status: 'Delayed' },
-    { product: 'Scotch Brite', orderValue: 3559, quantity: 43, orderId: '3757', expectedDelivery: '6/6/23', status: 'Confirmed' },
-    { product: 'Coca Cola', orderValue: 2055, quantity: 41, orderId: '2474', expectedDelivery: '11/11/22', status: 'Delayed' }
-  ];
-
+  dataSet: Product[] = [];
   isFormVisible: boolean = false;
 
-  newProduct: any = {
+  newProduct: {
+    expiryDate: string;
+    unit: string;
+    buyingPrice: number;
+    quantity: number;
+    productId: string;
+    thresholdValue: number;
+    category: string;
+    productName: string
+  } = {
     productName: '',
     productId: '',
     category: '',
@@ -62,33 +67,62 @@ export default class InventoryComponent {
     quantity: 0,
     unit: '',
     expiryDate: '',
-    thresholdValue: 0
+    thresholdValue: 0,
   };
 
   categories: string[] = ['Beverages', 'Snacks', 'Cleaning', 'Personal Care', 'Others'];
-  constructor(private cdr: ChangeDetectorRef) {}
- 
-  toggleForm(): void {
-    this.isFormVisible = !this.isFormVisible;
-    this.cdr.detectChanges();
+
+  constructor(private cdr: ChangeDetectorRef, private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.fetchProducts();
+  }
+
+  fetchProducts(): void {
+    const username = 'testUser';
+    this.productService.getProducts(username).subscribe({
+      next: (products: Product[]) => {
+        this.dataSet = products;
+      },
+      error: (error: any) => {
+        console.error('Error fetching products:', error);
+      },
+    });
   }
 
   addProduct(): void {
     if (this.newProduct.productName && this.newProduct.productId && this.newProduct.category) {
-      const newProductData: Order = {
-        product: this.newProduct.productName,
-        orderValue: this.newProduct.buyingPrice * this.newProduct.quantity,
-        quantity: this.newProduct.quantity,
-        orderId: this.generateOrderId(),
-        expectedDelivery: this.newProduct.expiryDate,
-        status: 'Pending'
-      };
-      this.dataSet = [...this.dataSet, newProductData];
-      console.log('New Product Added:', newProductData);
-      this.resetForm();
+      const username = 'testUser';
+      this.productService.addProduct(this.newProduct, username).subscribe({
+        next: (response: any) => {
+          console.log('Product added successfully:', response);
+          this.fetchProducts();
+          this.resetForm();
+        },
+        error: (error: any) => {
+          console.error('Error adding product:', error);
+        },
+      });
     } else {
       alert('Please fill in all required fields!');
     }
+  }
+
+  deleteProduct(productId: string): void {
+    this.productService.deleteProduct(Number(productId)).subscribe({
+      next: (response: any) => {
+        console.log('Product deleted successfully:', response);
+        this.fetchProducts();
+      },
+      error: (error: any) => {
+        console.error('Error deleting product:', error);
+      },
+    });
+  }
+
+  toggleForm(): void {
+    this.isFormVisible = !this.isFormVisible;
+    this.cdr.detectChanges();
   }
 
   resetForm(): void {
@@ -100,12 +134,8 @@ export default class InventoryComponent {
       quantity: 0,
       unit: '',
       expiryDate: '',
-      thresholdValue: 0
+      thresholdValue: 0,
     };
     this.isFormVisible = false;
-  }
-
-  private generateOrderId(): string {
-    return Math.floor(Math.random() * 10000).toString();
   }
 }
