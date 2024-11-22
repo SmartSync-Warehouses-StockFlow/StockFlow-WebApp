@@ -75,6 +75,7 @@ export default  class OrdersComponent implements OnInit {
       // Llamar al servicio para obtener los datos del usuario usando el username
       this.orderService.getUserByOrder(this.username).subscribe((data) => {
           this.dataSet = data
+          
       });
   }
 
