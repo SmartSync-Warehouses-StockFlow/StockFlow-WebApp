@@ -6,18 +6,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SupplierService {
-  private apiUrl = 'http://localhost:8080/api/smart/v1/supplier/'; // URL base para los productos
+  private apiUrl = 'http://localhost:8080/api/smart/v1/suppliers'; // URL base para los productos
+  private addSupplierUrl = 'http://localhost:8080/api/smart/v1/supplier/'; // URL base para los productos
 
   constructor(private http: HttpClient) {}
 
   // Obtener productos por username
-  getSupplier(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}${username}`);
+  getSupplier(): Observable<any> {
+    return this.http.get(`${this.apiUrl}`);
   }
 
   // Agregar un nuevo producto
   addSupplier(product: any, username: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}${username}`, product);
+    return this.http.post(`${this.addSupplierUrl}`, product);
   }
 
 
